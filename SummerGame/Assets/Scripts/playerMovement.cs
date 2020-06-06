@@ -5,8 +5,8 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
-    Vector2 mp = Input.mousePosition;
-    Vector2 playerPosition = transform.position;
+    //Vector2 mp = Input.mousePosition;
+    //Vector2 playerPosition = transform.position;
     void Start()
     {
         
