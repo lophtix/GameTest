@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Prefabs/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Sprites/Tile.png" type="Texture" id=5]
+
+[node name="Main" type="Node"]
+
+[node name="BulletContainer" type="Node" parent="." groups=[
+"containers",
+]]
+
+[node name="Tile" type="Sprite" parent="."]
+position = Vector2( 2.76636, -2.78845 )
+texture = ExtResource( 5 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
