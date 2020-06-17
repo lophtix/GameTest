@@ -16,6 +16,7 @@ func _ready():
 	self.lobby = get_node("Lobby")
 	self.players = {}
 	get_tree().connect("network_peer_disconnected", self, "deregister_player")
+	get_tree().connect("network_peer_connected", self, "register_to_server")
 
 func start_client():
 	self.check = true
@@ -25,6 +26,7 @@ func start_client():
 	self.player_name = get_node("Connection").get_node("Name").text
 	peer.create_client(ip, port)
 	get_tree().set_network_peer(peer)
+	self.players[get_tree().get_network_unique_id()]= self.player_name
 	update_lobby()
 
 	self.connection.hide()
@@ -43,14 +45,12 @@ func start_server():
 	self.connection.hide()
 	self.lobby.show()
 
-remote func register_player(register_name):
-	var id = get_tree().get_rpc_sender_id()
-	self.players[id] = register_name as String
-	for player in self.players:
-		rpc("update_players",self.players[player], player)
-	update_lobby()
+func register_to_server(id):
+	print(id)
+	rpc_id(id, "register_player", self.player_name)
 
-remote func update_players(register_name, id):
+remote func register_player(register_name):
+	var id = get_tree().get_rpc_sender_id()	
 	self.players[id] = register_name
 	update_lobby()
 
@@ -66,9 +66,3 @@ func update_lobby():
 		var listed_player = Label.new()
 		listed_player.text = self.players[player]
 		self.lobby.get_node("players").add_child(listed_player)
-
-func _process(delta):
-	if (self.check):
-		if (get_tree().network_peer.get_connection_status() == 2):
-			self.check = false
-			rpc("register_player", self.player_name)
