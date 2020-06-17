@@ -78,3 +78,4 @@ margin_bottom = 24.0
 text = "START"
 [connection signal="pressed" from="Connection/ServerClient" to="." method="start_server"]
 [connection signal="pressed" from="Connection/Client" to="." method="start_client"]
+[connection signal="pressed" from="Lobby/Start_button" to="." method="start_game"]

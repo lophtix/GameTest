@@ -9,12 +9,15 @@ var lobby
 var check
 var players
 var player_name
+var locations
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.connection = get_node("Connection")
 	self.lobby = get_node("Lobby")
 	self.players = {}
+	self.locations = [Vector2(0,0), Vector2(0,1), Vector2(1,0), Vector2(1,1)]
+
 	get_tree().connect("network_peer_disconnected", self, "deregister_player")
 	get_tree().connect("network_peer_connected", self, "register_to_server")
 	get_tree().connect("connection_failed", self, "back_to_lobby")
@@ -68,6 +71,26 @@ func update_lobby():
 		var listed_player = Label.new()
 		listed_player.text = self.players[player]
 		self.lobby.get_node("players").add_child(listed_player)
+
+func start_game():
+	print("trying to start game")
+	if (get_tree().is_network_server()):
+		rpc("map_preperation")
+
+remotesync func map_preperation():
+	var map = load(scene).instance()
+	add_child(map)
+	var location = 0
+	for player in self.players:
+		var new_player = load(player_location).instance()
+		new_player.position = self.locations[location]
+		new_player.name = self.players[player]
+		new_player.set_network_master(player)
+		get_node("Main").get_node("PlayerContainer").add_child(new_player) 
+		print(get_node("Main").get_node("PlayerContainer").get_node(self.players[player]).is_network_master())
+
+		location+=1
+
 
 func back_to_lobby():
 	get_node("Lobby").hide()
