@@ -10,7 +10,7 @@ var bulletScene
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.sprite = self.get_children()[0]
-	self.bulletContainer = get_tree().get_root().get_child(0)
+	self.bulletContainer = get_tree().get_nodes_in_group("containers")[0]
 	self.bulletScene = load(bulletLocation)
 	pass # Replace with function body.
 
