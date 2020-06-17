@@ -17,6 +17,8 @@ func _ready():
 	self.players = {}
 	get_tree().connect("network_peer_disconnected", self, "deregister_player")
 	get_tree().connect("network_peer_connected", self, "register_to_server")
+	get_tree().connect("connection_failed", self, "back_to_lobby")
+	get_tree().connect("server_disconnected", self, "back_to_lobby")
 
 func start_client():
 	self.check = true
@@ -66,3 +68,7 @@ func update_lobby():
 		var listed_player = Label.new()
 		listed_player.text = self.players[player]
 		self.lobby.get_node("players").add_child(listed_player)
+
+func back_to_lobby():
+	get_node("Lobby").hide()
+	get_node("Connection").show()
