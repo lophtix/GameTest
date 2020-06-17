@@ -15,6 +15,7 @@ func _ready():
 	self.connection = get_node("Connection")
 	self.lobby = get_node("Lobby")
 	self.players = {}
+	get_tree().connect("network_peer_disconnected", self, "deregister_player")
 
 func start_client():
 	self.check = true
@@ -44,7 +45,6 @@ func start_server():
 
 remote func register_player(register_name):
 	var id = get_tree().get_rpc_sender_id()
-	print(register_name)
 	self.players[id] = register_name as String
 	for player in self.players:
 		rpc("update_players",self.players[player], player)
@@ -52,6 +52,10 @@ remote func register_player(register_name):
 
 remote func update_players(register_name, id):
 	self.players[id] = register_name
+	update_lobby()
+
+remote func deregister_player(id):
+	self.players.erase(id)
 	update_lobby()
 
 func update_lobby():
