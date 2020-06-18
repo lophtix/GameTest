@@ -16,7 +16,7 @@ func _ready():
 	self.connection = get_node("Connection")
 	self.lobby = get_node("Lobby")
 	self.players = {}
-	self.locations = [Vector2(0,0), Vector2(0,1), Vector2(1,0), Vector2(1,1)]
+	self.locations = [Vector2(0,0), Vector2(0,100), Vector2(100,0), Vector2(100,100)]
 
 	get_tree().connect("network_peer_disconnected", self, "deregister_player")
 	get_tree().connect("network_peer_connected", self, "register_to_server")
@@ -84,10 +84,14 @@ remotesync func map_preperation():
 	for player in self.players:
 		var new_player = load(player_location).instance()
 		new_player.position = self.locations[location]
-		new_player.name = self.players[player]
+		new_player.name = player as String
 		new_player.set_network_master(player)
-		get_node("Main").get_node("PlayerContainer").add_child(new_player) 
-		print(get_node("Main").get_node("PlayerContainer").get_node(self.players[player]).is_network_master())
+		if player == get_tree().get_network_unique_id():
+			new_player.get_node("PlayerCamera").current = true
+		else:
+			new_player.get_node("PlayerCamera").current = false
+		get_node("/root/Menu/Main/PlayerContainer").add_child(new_player) 
+		print(player)
 
 		location+=1
 
