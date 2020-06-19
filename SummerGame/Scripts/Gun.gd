@@ -13,9 +13,12 @@ remote var sprite_flip
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	puppet_pos = position
+	puppet_rot = rotation
 	self.sprite = self.get_children()[0]
 	self.bulletContainer = get_tree().get_root().get_node("/root/Menu/Main/BulletContainer")
 	self.bulletScene = load(bulletLocation)
+	sprite_flip = sprite.flip_v
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
