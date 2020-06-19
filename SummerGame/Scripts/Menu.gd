@@ -107,4 +107,5 @@ remotesync func map_preperation():
 func back_to_lobby():
 	get_node("Lobby").hide()
 	get_node("Connection").show()
+	get_node("Connecting").hide()
 	self.map.queue_free()
