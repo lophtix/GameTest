@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Menu.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/space.jpeg" type="Texture" id=2]
 
 [node name="Menu" type="Node"]
 script = ExtResource( 1 )
@@ -91,6 +92,12 @@ text = "Connecting to server..."
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 513.778, 297.42 )
+scale = Vector2( 0.4523, 0.359802 )
+z_index = -1
+texture = ExtResource( 2 )
 [connection signal="pressed" from="Connection/ServerClient" to="." method="start_server"]
 [connection signal="pressed" from="Connection/Client" to="." method="start_client"]
 [connection signal="pressed" from="Lobby/Start_button" to="." method="start_game"]
