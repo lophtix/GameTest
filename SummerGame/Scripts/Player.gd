@@ -28,6 +28,6 @@ func _process(delta):
 		move_and_slide(movement*velocity)
 
 		puppet_pos = position
+		rset("puppet_pos", puppet_pos)
 	else:
 		position = puppet_pos
-	rset("puppet_pos", puppet_pos)

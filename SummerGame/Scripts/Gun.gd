@@ -29,14 +29,13 @@ func _process(delta):
 			rpc("shoot", get_tree().get_network_unique_id())
 		puppet_pos = position
 		puppet_rot = rotation
+		rset("sprite_flip", sprite_flip)
+		rset("puppet_pos", puppet_pos)
+		rset("puppet_rot", puppet_rot)
 	else:
 		position = puppet_pos
 		rotation = puppet_rot
 		sprite.flip_v = sprite_flip
-	
-	rset("sprite_flip", sprite_flip)
-	rset("puppet_pos", puppet_pos)
-	rset("puppet_rot", puppet_rot)
 
 func positioning():
 	self.position = (get_viewport().get_mouse_position() - get_viewport().size/2).normalized()*offset
