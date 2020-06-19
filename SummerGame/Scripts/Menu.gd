@@ -11,16 +11,18 @@ var check
 var players
 var player_name
 var locations
+var game_on
 
 var map
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	game_on = false
 	self.connection = get_node("Connection")
 	self.lobby = get_node("Lobby")
 	self.connecting = get_node("Connecting")
 	self.players = {}
-	self.locations = [Vector2(0,0), Vector2(0,100), Vector2(100,0), Vector2(100,100)]
+	self.locations = [Vector2(0,0), Vector2(0,500), Vector2(500,0), Vector2(500,500)]
 
 	get_tree().connect("network_peer_disconnected", self, "deregister_player")
 	get_tree().connect("network_peer_connected", self, "register_to_server")
@@ -69,13 +71,19 @@ remote func register_player(register_name):
 
 remote func deregister_player(id):
 	self.players.erase(id)
-	get_node("/root/Menu/Main/PlayerContainer/" + id).queue_free()
+	if game_on:
+		get_node("/root/Menu/Main/PlayerContainer/" + id).queue_free()
 	update_lobby()
 
 func update_lobby():
 	for child in self.lobby.get_node("players").get_children():
 		child.queue_free()
-
+	var temp_players = {}
+	var keys = self.players.keys()
+	keys.sort()
+	for key in keys:
+		temp_players[key] = self.players[key]
+	self.players = temp_players
 	for player in self.players:
 		var listed_player = Label.new()
 		listed_player.text = self.players[player]
@@ -90,21 +98,23 @@ remotesync func map_preperation():
 	add_child(map)
 	var location = 0
 	for player in self.players:
+		print(players.keys())
 		var new_player = load(player_location).instance()
-		new_player.position = self.locations[location]
 		new_player.name = player as String
 		new_player.get_node("Name").text = players[player]
 		new_player.set_network_master(player)
+		new_player.global_position = self.locations[location] 
 		if player == get_tree().get_network_unique_id():
 			new_player.get_node("PlayerCamera").current = true
 		else:
 			new_player.get_node("PlayerCamera").current = false
-		get_node("/root/Menu/Main/PlayerContainer").add_child(new_player) 
+		get_node("/root/Menu/Main/PlayerContainer").add_child(new_player)
 
 		location+=1
-
+	game_on = true
 
 func back_to_lobby():
+	game_on = false
 	get_node("Lobby").hide()
 	get_node("Connection").show()
 	get_node("Connecting").hide()
