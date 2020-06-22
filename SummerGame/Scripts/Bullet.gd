@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+class_name Bullet
+
 export (int) var velocity = 100
 var direction
 var timeAlive = 0
