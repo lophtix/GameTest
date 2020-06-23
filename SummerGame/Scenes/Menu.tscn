@@ -12,12 +12,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -8.07202
-margin_top = -7.0
-margin_right = 36.928
-margin_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -94,7 +91,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 513.778, 297.42 )
+position = Vector2( 513.043, 298.155 )
 scale = Vector2( 0.4523, 0.359802 )
 z_index = -1
 texture = ExtResource( 2 )
