@@ -2,10 +2,15 @@ extends KinematicBody2D
 
 export (int) var velocity = 100
 
+var interactable_boxes
+var inventory
+
 remote var puppet_pos
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	interactable_boxes = []
+	inventory = []
 	puppet_pos = position
 	pass # Replace with function body.
 
@@ -25,9 +30,20 @@ func _process(delta):
 	
 		movement = movement.normalized()
 
+		if (interactable_boxes.size() > 0 && Input.is_action_just_pressed("ui_pick_up")):
+			interactable_boxes[0].loot_box(self)
+			print(inventory)
+
 		move_and_slide(movement*velocity)
 
 		puppet_pos = position
 		rset("puppet_pos", puppet_pos)
 	else:
 		position = puppet_pos
+
+func add_box(box):
+	interactable_boxes.append(box)
+
+func remove_box(box):
+	interactable_boxes.erase(box)
+
