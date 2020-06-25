@@ -15,12 +15,12 @@ func _ready():
 	get_node("Area2D").connect("body_exited", self, "_on_body_exit")
 
 func _on_body_enter(player):
-	if player.name == get_tree().get_network_unique_id() as String:
+	if player.name == get_tree().get_network_unique_id() as String && !looted:
 		get_node("Label").show()
 		player.add_box(self)
 
 func _on_body_exit(player):
-	if player.name == get_tree().get_network_unique_id() as String:
+	if player.name == get_tree().get_network_unique_id() as String && !looted:
 		get_node("Label").hide()
 		player.remove_box(self)
 
