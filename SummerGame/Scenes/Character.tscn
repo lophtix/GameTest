@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Sprites/Spacewalker.png" type="Texture" id=1]
 [ext_resource path="res://Sprites/Spacewalker_whole.png" type="Texture" id=2]
@@ -250,7 +250,7 @@ tracks/19/keys = {
 "values": [ Vector2( 13, 136.4 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "Running"
 length = 1.2
 loop = true
@@ -496,8 +496,7 @@ tracks/19/keys = {
 "values": [  ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "Static"
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Hip/Torso/Arm_R/Forarm_R/Hand_R:rotation_degrees")
 tracks/0/interp = 1
@@ -739,12 +738,31 @@ tracks/19/keys = {
 "values": [ Vector2( 13, 136.4 ) ]
 }
 
+[sub_resource type="AnimationNodeBlend2" id=4]
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "Running"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeBlendTree" id=7]
+graph_offset = Vector2( -31, 96 )
+nodes/Moving/node = SubResource( 4 )
+nodes/Moving/position = Vector2( 520, 140 )
+nodes/Running/node = SubResource( 5 )
+nodes/Running/position = Vector2( 240, 240 )
+nodes/Still/node = SubResource( 6 )
+nodes/Still/position = Vector2( 240, 120 )
+nodes/output/position = Vector2( 700, 140 )
+node_connections = [ "output", 0, "Moving", "Moving", 0, "Still", "Moving", 1, "Running" ]
+
 [node name="Character" type="Node2D"]
 position = Vector2( -7.07123, -64.811 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Hip" type="Sprite" parent="."]
-position = Vector2( 13, 192.897 )
+position = Vector2( 13, 136.4 )
 texture = ExtResource( 1 )
 offset = Vector2( -12, 65.5998 )
 region_enabled = true
@@ -755,7 +773,7 @@ __meta__ = {
 
 [node name="Torso" type="Sprite" parent="Hip"]
 position = Vector2( -2, -40.4002 )
-rotation = 0.332807
+rotation = -0.0200209
 texture = ExtResource( 1 )
 offset = Vector2( -16, -201.6 )
 region_enabled = true
@@ -766,7 +784,7 @@ __meta__ = {
 
 [node name="Head" type="Sprite" parent="Hip/Torso"]
 position = Vector2( 18.9781, -411.589 )
-rotation = -0.135608
+rotation = 0.0181911
 texture = ExtResource( 1 )
 offset = Vector2( -14.9781, -232.411 )
 region_enabled = true
@@ -777,7 +795,7 @@ __meta__ = {
 
 [node name="Arm_R" type="Sprite" parent="Hip/Torso"]
 position = Vector2( -152.6, -240 )
-rotation = -0.769619
+rotation = -0.0400824
 z_index = 2
 texture = ExtResource( 1 )
 offset = Vector2( -27.0275, 102.839 )
@@ -790,7 +808,7 @@ __meta__ = {
 
 [node name="Forarm_R" type="Sprite" parent="Hip/Torso/Arm_R"]
 position = Vector2( -69, 245 )
-rotation = -0.899276
+rotation = -0.0208936
 texture = ExtResource( 1 )
 offset = Vector2( 6, 90 )
 region_enabled = true
@@ -801,7 +819,7 @@ __meta__ = {
 
 [node name="Hand_R" type="Sprite" parent="Hip/Torso/Arm_R/Forarm_R"]
 position = Vector2( 4.59998, 197.8 )
-rotation = -0.222146
+rotation = -0.100694
 z_index = -1
 texture = ExtResource( 1 )
 offset = Vector2( 2.40002, 46.2 )
@@ -813,14 +831,14 @@ __meta__ = {
 
 [node name="Handmove_R" type="Position2D" parent="Hip/Torso/Arm_R/Forarm_R/Hand_R"]
 position = Vector2( -4.24268, 63.6396 )
-rotation = -0.363875
+rotation = 0.891586
 __meta__ = {
 "_edit_bone_": true
 }
 
 [node name="Arm_L" type="Sprite" parent="Hip/Torso"]
 position = Vector2( 116, -249.6 )
-rotation = 0.850989
+rotation = -0.00424516
 z_index = -1
 texture = ExtResource( 1 )
 offset = Vector2( 13, 110.6 )
@@ -833,7 +851,7 @@ __meta__ = {
 
 [node name="Forarm_L" type="Sprite" parent="Hip/Torso/Arm_L"]
 position = Vector2( 52, 254.6 )
-rotation = -1.09657
+rotation = -0.0621514
 texture = ExtResource( 1 )
 offset = Vector2( -9, 89.3999 )
 region_enabled = true
@@ -844,7 +862,7 @@ __meta__ = {
 
 [node name="Hand_L" type="Sprite" parent="Hip/Torso/Arm_L/Forarm_L"]
 position = Vector2( 6.7999, 194.8 )
-rotation = -0.339578
+rotation = -0.00607731
 z_index = -1
 texture = ExtResource( 1 )
 offset = Vector2( 5.2001, 50.2 )
@@ -862,7 +880,7 @@ __meta__ = {
 
 [node name="Leg_L" type="Sprite" parent="Hip"]
 position = Vector2( 84.6712, 130.791 )
-rotation = -0.413882
+rotation = -0.00918185
 texture = ExtResource( 1 )
 offset = Vector2( -8.49966, 148.748 )
 region_enabled = true
@@ -874,7 +892,7 @@ __meta__ = {
 
 [node name="Shin_L" type="Sprite" parent="Hip/Leg_L"]
 position = Vector2( -11.7527, 296.72 )
-rotation = 0.952635
+rotation = 0.0197265
 texture = ExtResource( 1 )
 offset = Vector2( -1.24728, 102.28 )
 region_enabled = true
@@ -885,7 +903,7 @@ __meta__ = {
 
 [node name="Foot_L" type="Sprite" parent="Hip/Leg_L/Shin_L"]
 position = Vector2( 22.6274, 200.818 )
-rotation = -0.0400762
+rotation = -0.0117033
 texture = ExtResource( 1 )
 offset = Vector2( 26.7157, 49.4263 )
 region_enabled = true
@@ -902,7 +920,7 @@ __meta__ = {
 
 [node name="Leg_R" type="Sprite" parent="Hip"]
 position = Vector2( -100.419, 125.693 )
-rotation = 0.263475
+rotation = -0.0129558
 texture = ExtResource( 1 )
 offset = Vector2( 3.41925, 154.307 )
 region_enabled = true
@@ -914,7 +932,7 @@ __meta__ = {
 
 [node name="Shin_R" type="Sprite" parent="Hip/Leg_R"]
 position = Vector2( 7.87457, 310.303 )
-rotation = 0.669029
+rotation = 0.0236111
 texture = ExtResource( 1 )
 offset = Vector2( -8.97516, 106.26 )
 region_enabled = true
@@ -925,7 +943,7 @@ __meta__ = {
 
 [node name="Foot_R" type="Sprite" parent="Hip/Leg_R/Shin_R"]
 position = Vector2( 1.41418, 212.132 )
-rotation = 0.0978586
+rotation = -0.011828
 texture = ExtResource( 1 )
 offset = Vector2( 28.7573, 45.6915 )
 region_enabled = true
@@ -948,11 +966,18 @@ z_index = 10
 texture = ExtResource( 2 )
 
 [node name="Floor" type="Sprite" parent="."]
+visible = false
 modulate = Color( 1, 1, 1, 0.556863 )
 position = Vector2( 44, 1773.41 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Idle = SubResource( 1 )
-anims/Running = SubResource( 3 )
-anims/Static = SubResource( 2 )
+anims/Running = SubResource( 2 )
+anims/Static = SubResource( 3 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 7 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/Moving/blend_amount = 0.0
