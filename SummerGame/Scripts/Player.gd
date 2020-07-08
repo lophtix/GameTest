@@ -23,17 +23,9 @@ func _process(delta):
 		if Input.is_action_pressed('ui_up'):
 			movement.y -= 1
 
+		if Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down")  or Input.is_action_just_released("ui_up") or Input.is_action_just_released("ui_right") or Input.is_action_just_released("ui_left") or Input.is_action_just_released("ui_down"):
+			$PlayerSkin.movementChanged(movement)
 
-		if movement.x < 0:
-			var scale = find_node("Character").get("scale")
-			if scale.x > 0:
-				find_node("Character").set("scale", Vector2(-scale.x, scale.y) )
-		elif movement.x > 0:
-			var scale = find_node("Character").get("scale")
-			if scale.x < 0:
-				find_node("Character").set("scale", Vector2(-scale.x, scale.y) )
-		
-		find_node("AnimationTree").set("parameters/Moving/blend_amount", max( abs(movement.x), abs(movement.y) ))
 		movement = movement.normalized()
 
 		move_and_slide(movement*velocity)

@@ -34,7 +34,7 @@ visible = false
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 2 )
 
-[node name="Character" parent="." instance=ExtResource( 5 )]
+[node name="PlayerSkin" parent="." instance=ExtResource( 5 )]
 position = Vector2( 0, 0 )
 scale = Vector2( 0.07, 0.07 )
 
